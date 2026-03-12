@@ -2,439 +2,215 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AA-B-I-XES — Beyond Definition</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Raleway:wght@100;200;300;400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- PRELOADER -->
-  <div class="preloader" id="preloader">
-    <div class="preloader-inner">
-      <div class="preloader-logo" id="preloaderLogo">AA-B-I-XES</div>
-      <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill"></div></div>
-      <div class="preloader-pct" id="preloaderPct">0%</div>
-    </div>
-    <div class="preloader-lines" aria-hidden="true">
-      <span></span><span></span><span></span><span></span>
-    </div>
-  </div>
-
-  <!-- THREE.JS CANVAS -->
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- OVERLAYS -->
-  <div class="noise-overlay"></div>
-  <div class="vignette"></div>
-
-  <!-- SCROLL PROGRESS -->
-  <div class="scroll-progress" id="scrollProgress"></div>
-
-  <!-- CUSTOM CURSOR -->
-  <div class="cursor-dot" id="cursorDot"></div>
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
-  <div class="cursor-trail-container" id="cursorTrails"></div>
+
+  <!-- Progress Bar -->
+  <div id="progress-bar"></div>
 
   <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-logo">AA-B-I-XES</div>
-    <div class="nav-links">
-      <a href="#vision" class="nav-link magnetic-nav">Vision</a>
-      <a href="#identity" class="nav-link magnetic-nav">Identity</a>
-      <a href="#essence" class="nav-link magnetic-nav">Essence</a>
-      <a href="#stats" class="nav-link magnetic-nav">Legacy</a>
-      <a href="#manifesto" class="nav-link magnetic-nav">Manifesto</a>
-    </div>
-    <div class="nav-links">
-      <a href="https://aab-i-xes.github.io/COREDib/" class="btn-primary">
-          <span class="btn-bg"></span>
-          <span class="btn-text">KNOW MORE</span>
-      </a>
-    </div>
+  <nav>
+    <div class="nav-logo">Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</div>
+    <ul class="nav-links">
+      <li><a href="#">Work</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
   </nav>
 
-  <!-- ══════════════════════════════════════
-       SECTION 1 — HERO
-  ══════════════════════════════════════ -->
-  <section class="section hero" id="hero">
-    <div class="hero-bg-letters" aria-hidden="true">
-      <span class="hbl" style="--i:0">A</span>
-      <span class="hbl" style="--i:1">A</span>
-      <span class="hbl" style="--i:2">B</span>
-      <span class="hbl" style="--i:3">I</span>
-      <span class="hbl" style="--i:4">X</span>
-      <span class="hbl" style="--i:5">E</span>
-      <span class="hbl" style="--i:6">S</span>
-    </div>
-
+  <!-- HERO -->
+  <section class="hero" style="max-width:100%; padding:0;">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
     <div class="hero-content">
-      <div class="hero-pre-title reveal-up" data-delay="200">Est. MMXXVI — </div>
-
-      <h1 class="hero-title">
-        <span class="ht-row reveal-up" data-delay="400">
-          <span class="ht-char" data-char="A">A</span><span class="ht-char" data-char="A">A</span>
-        </span>
-        <span class="ht-sep reveal-up" data-delay="550"></span>
-        <span class="ht-dot">·</span>
-        <span class="ht-row reveal-up" data-delay="700">
-          <span class="ht-char ht-gold" data-char="B">B</span>
-          <span class="ht-dot">·</span>
-          <span class="ht-char ht-gold" data-char="I">I</span>
-        </span>
-        <span class="ht-sep reveal-up" data-delay="850"></span>
-        <span class="ht-row reveal-up" data-delay="1000">
-          <span class="ht-dot">·</span>
-          <span class="ht-char" data-char="X">X</span>
-          <span class="ht-char" data-char="E">E</span>
-          <span class="ht-char" data-char="S">S</span>
-        </span>
-      </h1>
-
-      <div class="hero-typewriter reveal-up" data-delay="1200">
-        <span class="tw-prefix">We are </span>
-        <span class="tw-word" id="twWord"></span>
-        <span class="tw-cursor">|</span>
-      </div>
-
-      <p class="hero-subtitle reveal-up" data-delay="1400">
-        Where artistry meets architecture.<br />
-        <em>A brand beyond definition.</em>
-      </p>
-
-      <div class="hero-actions reveal-up" data-delay="1600">
-        <a href="#vision" class="btn-primary">
-          <span class="btn-bg"></span>
-          <span class="btn-text">Discover the World</span>
-        </a>
-        <a href="#manifesto" class="btn-ghost">
-          <span>Our Manifesto ↓</span>
-        </a>
-         <a href="https://aab-i-xes.github.io/COREDib/" class="btn-primary">
-          <span class="btn-bg"></span>
-          <span class="btn-text">KNOW MORE</span>
-        </a>
-        <a href="#process" class="btn-primary">
-          <span class="btn-bg"></span>
-          <span class="btn-text">PROCESS</span>
-        </a>
-      </div>
-      <div class="hero-stats reveal-up" data-delay="1900">
-        <div class="hstat">
-          <span class="hstat-num" data-count="100" data-suffix="%">0</span>
-          <span class="hstat-unit">%</span>
-          <span class="hstat-label">Authenticity</span>
-        </div>
-        <div class="hstat-sep"></div>
-        <div class="hstat">
-          <span class="hstat-num" data-count="2">0</span>
-          <span class="hstat-unit"></span>
-          <span class="hstat-label">Countries</span>
-        </div>
-        <div class="hstat-sep"></div>
-        <div class="hstat">
-          <span class="hstat-num" data-count="360 °">0</span>
-          <span class="hstat-unit"></span>
-          <span class="hstat-label">Vision</span>
-        </div>
-      </div>
+      <p class="hero-eyebrow">Welcome to this Journey</p>
+      <h1 class="hero-title">We craft<br/><span>We create</span><br/>We Support</h1>
+      <p class="hero-sub">Bold oportunities for Bold people. <br> We build experiences that leave an impression.</p>
+      <a href="https://aab-i-xes.github.io/COREDib/" class="hero-cta">Explore Our Work</a>
     </div>
-
-    <div class="hero-deco" aria-hidden="true">
-      <div class="hd-line hd-l1"></div>
-      <div class="hd-line hd-l2"></div>
-      <div class="hd-corner hd-tl"></div>
-      <div class="hd-corner hd-br"></div>
-    </div>
-
-    <div class="scroll-indicator">
-      <span class="si-line"></span>
-      <span class="si-text">scroll</span>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- MARQUEE 1 -->
-  <div class="marquee-band">
-    <div class="marquee-track mq-forward">
-      <span>AA-B-I-XES</span><span class="mq-gem">✦</span>
-      <span>APEX AESTHETICS</span><span class="mq-gem">✦</span>
-      <span>BOLD · ICONIC · EXCELLENCE</span><span class="mq-gem">✦</span>
-      <span>BEYOND DEFINITION</span><span class="mq-gem">✦</span>
-      <span>AA-B-I-XES</span><span class="mq-gem">✦</span>
-      <span>APEX AESTHETICS</span><span class="mq-gem">✦</span>
-      <span>BOLD · ICONIC · EXCELLENCE</span><span class="mq-gem">✦</span>
-      <span>BEYOND DEFINITION</span><span class="mq-gem">✦</span>
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <div class="marquee-item">Branding<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Shopping<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Services<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Branding<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Interior design<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Architech<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Tutors<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Web Development<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Art Exhibit<div class="marquee-dot"></div></div>
+      <div class="marquee-item">coming soon<div class="marquee-dot"></div></div>
+      <div class="marquee-item">coming soon<div class="marquee-dot"></div></div>
+      <div class="marquee-item">coming soon<div class="marquee-dot"></div></div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SECTION 2 — VISION
-  ══════════════════════════════════════ -->
-  <section class="section vision-section" id="vision">
-    <div class="section-inner">
-      <div class="section-label reveal-up">01 — Vision</div>
-      <h2 class="section-title reveal-up">Crafted for<br /><em>Those Who Know</em></h2>
-
-      <div class="vision-grid">
-        <div class="vision-card reveal-up" data-delay="0">
-          <div class="vc-glow"></div>
-          <div class="vc-top">
-            <span class="vc-icon">◈</span>
-            <span class="vc-num">01</span>
-          </div>
-          <h3 class="vc-title">Precision</h3>
-          <p class="vc-body">Every detail is deliberate. Every form, a statement. We do not follow trends — we set the axis.</p>
-          <div class="vc-arrow">→</div>
-        </div>
-        <div class="vision-card reveal-up" data-delay="150">
-          <div class="vc-glow"></div>
-          <div class="vc-top">
-            <span class="vc-icon">◉</span>
-            <span class="vc-num">02</span>
-          </div>
-          <h3 class="vc-title">Luxury</h3>
-          <p class="vc-body">Refinement is not a price point — it is a philosophy. AA-B-I-XES embodies the art of development and creativity</p>
-          <div class="vc-arrow">→</div>
-        </div>
-        <div class="vision-card reveal-up" data-delay="300">
-          <div class="vc-glow"></div>
-          <div class="vc-top">
-            <span class="vc-icon">◇</span>
-            <span class="vc-num">03</span>
-          </div>
-          <h3 class="vc-title">Legacy</h3>
-          <p class="vc-body">Built to endure. Designed to evolve. A name that echoes across generations and industries.</p>
-          <div class="vc-arrow">→</div>
-        </div>
-      </div>
-    </div>
-    <div class="section-orb orb-vision-a"></div>
-    <div class="section-orb orb-vision-b"></div>
-  </section>
-
-  <!-- ══════════════════════════════════════
-       SECTION 3 — IDENTITY
-  ══════════════════════════════════════ -->
-  <section class="section identity-section" id="identity">
-    <div class="section-inner identity-inner">
-      <div class="identity-text">
-        <div class="section-label reveal-up">02 — Identity</div>
-        <h2 class="section-title reveal-up">The Name<br /><em>Decoded</em></h2>
-        <div class="name-decode" id="nameDecode">
-          <div class="dr" data-delay="0">
-            <span class="dr-letters">AA</span>
-            <span class="dr-line"></span>
-            <div class="dr-right">
-              <span class="dr-title">Apex Aesthetics</span>
-              <span class="dr-desc">The highest point of visual mastery</span>
-            </div>
-          </div>
-          <div class="dr" data-delay="120">
-            <span class="dr-letters">B</span>
-            <span class="dr-line"></span>
-            <div class="dr-right">
-              <span class="dr-title">Bold</span>
-              <span class="dr-desc">Uncompromising creative courage</span>
-            </div>
-          </div>
-          <div class="dr" data-delay="240">
-            <span class="dr-letters">I</span>
-            <span class="dr-line"></span>
-            <div class="dr-right">
-              <span class="dr-title">Iconic</span>
-              <span class="dr-desc">Destined for timeless recognition</span>
-            </div>
-          </div>
-          <div class="dr" data-delay="360">
-            <span class="dr-letters">XES</span>
-            <span class="dr-line"></span>
-            <div class="dr-right">
-              <span class="dr-title">Excellence</span>
-              <span class="dr-desc">The standard we live and breathe</span>
-            </div>
+  <!-- ABOUT -->
+  <section>
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <div class="about-card about-card-main">..</div>
+        <div class="about-card about-card-accent">
+          <div class="about-stat">
+            <div class="about-stat-num">..</div>
+            <div class="about-stat-label">Your trust <br> Our excelence</div>
           </div>
         </div>
       </div>
-
-      <div class="identity-visual reveal-up" data-delay="200">
-        <div class="mono-wrap">
-          <div class="mono-ring mr1"></div>
-          <div class="mono-ring mr2"></div>
-          <div class="mono-ring mr3"></div>
-          <canvas class="mono-canvas" id="monoCanvas" width="300" height="300"></canvas>
-          <div class="mono-core">
-            <span class="mc-aa">AA</span>
-            <span class="mc-sep">—</span>
-            <span class="mc-sub">B · I · XES</span>
-          </div>
-          <div class="mono-corner mc-tl"></div>
-          <div class="mono-corner mc-tr"></div>
-          <div class="mono-corner mc-bl"></div>
-          <div class="mono-corner mc-br"></div>
-        </div>
+      <div>
+        <p class="about-label reveal delay-1">About us</p>
+        <h2 class="about-title reveal delay-2">Syncing Your - <br>Tech <br>Tasks and <br>Bringing it to Your Doorstep</h2>
+        <p class="about-text reveal delay-3">At AABIXES, we believe your time is too valuable to be spent on technical glitches or endless errands. We’ve built a unique service bridge that connects expert tech support with essential household help, from precision deliveries to personalized shopping</p>
+        <p class="about-text reveal delay-4">Whether you’re struggling with a stubborn Wi-Fi connection or need your weekly essentials delivered to your door, our mission is to handle the heavy lifting so you can focus on what truly matters.</p>
       </div>
     </div>
   </section>
 
-  <!-- PARALLAX QUOTE BREAK -->
-  <div class="pq-break" id="pqBreak">
-    <div class="pqb-bg"></div>
-    <div class="pqb-content">
-      <p class="pqb-quote reveal-up">"We do not create for the masses.<br/>We architect for the extraordinary."</p>
-      <p class="pqb-attr reveal-up" data-delay="200">— The AA-B-I-XES Founder</p>
-    </div>
-    <div class="pqb-lines">
-      <div class="pql"></div><div class="pql"></div>
-      <div class="pql"></div><div class="pql"></div>
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stats-inner">
+      <div class="reveal delay-1">
+        <div class="stat-number" data-count="240">0</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="reveal delay-2">
+        <div class="stat-number" data-count="98">0</div>
+        <div class="stat-label">Client Satisfaction %</div>
+      </div>
+      <div class="reveal delay-3">
+        <div class="stat-number" data-count="45">0</div>
+        <div class="stat-label">Awards Won</div>
+      </div>
+      <div class="reveal delay-4">
+        <div class="stat-number" data-count="12">0</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SECTION 4 — ESSENCE
-  ══════════════════════════════════════ -->
-  <section class="section essence-section" id="essence">
-    <div class="section-inner">
-      <div class="section-label reveal-up">03 — Essence</div>
-      <h2 class="section-title reveal-up" style="text-align:center">The<br/><em>Philosophy</em></h2>
-
-      <div class="etrio">
-        <div class="etrio-card reveal-up" data-delay="0">
-          <div class="etc-num">I</div>
-          <div class="etc-title">Form</div>
-          <p>Beauty in every dimension. The visual language of AA-B-I-XES is deliberate, architectural, and eternal.</p>
-        </div>
-        <div class="etrio-card etrio-featured reveal-up" data-delay="150">
-          <div class="etc-num">II</div>
-          <div class="etc-title">Function</div>
-          <p>Purpose-driven design. Every creation serves, elevates, and communicates without compromise.</p>
-        </div>
-        <div class="etrio-card reveal-up" data-delay="300">
-          <div class="etc-num">III</div>
-          <div class="etc-title">Feeling</div>
-          <p>The intangible made tangible. We craft experiences that linger long after the moment has passed.</p>
-        </div>
+  <!-- FEATURES -->
+  <section>
+    <div class="features-header">
+      <p class="features-label reveal">What we do</p>
+      <h2 class="features-title reveal delay-2">Services built<br/>for impact</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal delay-1">
+        <div class="feature-num">01</div>
+        <div class="feature-icon">✦</div>
+        <h3 class="feature-title">Brand Identity</h3>
+        <p class="feature-text">Logo systems, typography, color palettes — we craft brand languages that speak before you say a word.</p>
       </div>
-
-      <!-- Timeline -->
-       <a href="#tlProgress" class="btn-primary" id="process">
-          <span class="btn-bg"></span>
-          <span class="btn-text">PROCESS</span>
-        </a>
-      <div class="timeline-wrap reveal-up" data-delay="200">
-        <div class="tl-track"><div class="tl-progress" id="tlProgress"></div></div>
-        <div class="tl-points">
-          <div class="tl-pt" data-step="S-1" data-label="Contact"><div class="tl-dot"></div></div>
-          <div class="tl-pt" data-step="S-2" data-label="Describe project"><div class="tl-dot"></div></div>
-          <div class="tl-pt" data-step="S-3" data-label="Daily update "><div class="tl-dot"></div></div>
-          <div class="tl-pt" data-step="S-4" data-label="Beta testing"><div class="tl-dot"></div></div>
-          <div class="tl-pt" data-step="S-5-" data-label="Final output"><div class="tl-dot"></div></div>
-        </div>
+      <div class="feature-card reveal delay-2">
+        <div class="feature-num">02</div>
+        <div class="feature-icon">◈</div>
+        <h3 class="feature-title">Web development</h3>
+        <p class="feature-text">You provide ideas <br> We built it</p>
+      </div>
+      <div class="feature-card reveal delay-3">
+        <div class="feature-num">03</div>
+        <div class="feature-icon">⬡</div>
+        <h3 class="feature-title">Shopping</h3>
+        <p class="feature-text">Our shopping agents and bots help you find real and legitimate products</p>
+      </div>
+      <div class="feature-card reveal delay-2">
+        <div class="feature-num">04</div>
+        <div class="feature-icon">◎</div>
+        <h3 class="feature-title">Interior Design</h3>
+        <p class="feature-text">A chaoes free platform  where our agents help you design your Dream Home interior</p>
+      </div>
+      <div class="feature-card reveal delay-3">
+        <div class="feature-num">05</div>
+        <div class="feature-icon">❋</div>
+        <h3 class="feature-title">Art Exhibit</h3>
+        <p class="feature-text">Have lots of artwork you wanna show the World <br> Or wanna sell it <br> Come to us , We will provide you the best platform to sell or showcase your art,talent in our marketplace</p>
+      </div>
+      <div class="feature-card reveal delay-4">
+        <div class="feature-num">06</div>
+        <div class="feature-icon">⌘</div>
+        <h3 class="feature-title">Tutoring</h3>
+        <p class="feature-text">Cant find a proper tutor for you child.<br>
+        We can find you the best tutors at your area for you child.</p>
       </div>
     </div>
-    <div class="section-orb orb-essence"></div>
   </section>
 
-  <!-- ══════════════════════════════════════
-       SECTION 5 — STATS
-  ══════════════════════════════════════ -->
-  <section class="section stats-section" id="stats">
-    <div class="section-inner">
-      <div class="section-label reveal-up">04 — Legacy</div>
-      <h2 class="section-title reveal-up">Numbers that<br /><em>Define Us</em></h2>
-      <div class="stats-grid">
-        <div class="stat-card reveal-up" data-delay="0">
-          <div class="sc-val" data-target="1" data-suffix="+">0</div>
-          <div class="sc-label">Industries Touched</div>
-          <div class="sc-bar"><div class="sc-fill" data-pct="80"></div></div>
-        </div>
-        <div class="stat-card reveal-up" data-delay="100">
-          <div class="sc-val" data-target="2" data-suffix="">0</div>
-          <div class="sc-label">Countries Reached</div>
-          <div class="sc-bar"><div class="sc-fill" data-pct="65"></div></div>
-        </div>
-        <div class="stat-card reveal-up" data-delay="200">
-          <div class="sc-val" data-target="360" data-suffix="°">0</div>
-          <div class="sc-label">Degrees of Vision</div>
-          <div class="sc-bar"><div class="sc-fill" data-pct="100"></div></div>
-        </div>
-        <div class="stat-card reveal-up" data-delay="300">
-          <div class="sc-val" data-target="100" data-suffix="%"></div>
-          <div class="sc-label">Authenticity</div>
-          <div class="sc-bar"><div class="sc-fill" data-pct="100"></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="stats-grid-bg" id="statsGridBg"></div>
-  </section>
-
-  <!-- MARQUEE 2 (REVERSE) -->
-  <div class="marquee-band">
-    <div class="marquee-track mq-reverse">
-      <span>PRECISION</span><span class="mq-gem">◆</span>
-      <span>ELEGANCE</span><span class="mq-gem">◆</span>
-      <span>MASTERY</span><span class="mq-gem">◆</span>
-      <span>LEGACY</span><span class="mq-gem">◆</span>
-      <span>PRECISION</span><span class="mq-gem">◆</span>
-      <span>ELEGANCE</span><span class="mq-gem">◆</span>
-      <span>MASTERY</span><span class="mq-gem">◆</span>
-      <span>LEGACY</span><span class="mq-gem">◆</span>
+  <!-- PARALLAX BANNER -->
+  <div class="parallax-banner">
+    <div class="parallax-banner-text" id="parallaxText">
+      Crafting the<br/>extraordinary
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SECTION 6 — MANIFESTO
-  ══════════════════════════════════════ -->
-  <section class="section manifesto-section" id="manifesto">
-    <div class="section-inner">
-      <div class="section-label reveal-up">05 — Manifesto</div>
-      <div class="manifesto-body">
-        <p class="mfl reveal-up" data-delay="0">We are the architects of intention.</p>
-        <p class="mfl reveal-up" data-delay="80">We build worlds from silence and detail.</p>
-        <p class="mfl reveal-up" data-delay="160">We wear our name like armor.</p>
-        <p class="mfl reveal-up" data-delay="240">We do not ask for a seat at the table.</p>
-        <p class="mfl mfl-break reveal-up" data-delay="320">We build our own.</p>
-        <p class="mfl mfl-name reveal-up" data-delay="460">AA-B-I-XES.</p>
-        <p class="mfl mfl-sub reveal-up" data-delay="580">This is not a brand. This is a declaration.</p>
+  <!-- WORK -->
+  <section>
+    <div class="work-header">
+      <h2 class="work-title reveal">Selected<br/>Work</h2>
+      <a href="#" class="work-link reveal delay-2">View All Projects →</a>
+    </div>
+    <div class="work-grid">
+      <div class="work-item reveal-left">
+        <div class="work-thumb work-thumb-1">..</div>
+        <div class="work-overlay">
+          <div class="work-overlay-title">..</div>
+          <div class="work-overlay-tag">Branding · 2026</div>
+        </div>
+      </div>
+      <div class="work-item reveal delay-2">
+        <div class="work-thumb work-thumb-2">..</div>
+        <div class="work-overlay">
+          <div class="work-overlay-title">..</div>
+          <div class="work-overlay-tag">Identity · 2026</div>
+        </div>
+      </div>
+      <div class="work-item reveal delay-3">
+        <div class="work-thumb work-thumb-3">..</div>
+        <div class="work-overlay">
+          <div class="work-overlay-title">..</div>
+          <div class="work-overlay-tag">CREATIVITY · 2026</div>
+        </div>
       </div>
     </div>
-    <div class="manifesto-glyphs">
-      <span style="--gx:10%;--gy:20%;--gd:0s">✦</span>
-      <span style="--gx:80%;--gy:15%;--gd:0.5s">◈</span>
-      <span style="--gx:25%;--gy:75%;--gd:1s">◉</span>
-      <span style="--gx:70%;--gy:65%;--gd:1.5s">◇</span>
-      <span style="--gx:50%;--gy:40%;--gd:0.8s">✦</span>
-      <span style="--gx:90%;--gy:80%;--gd:0.3s">◆</span>
-    </div>
   </section>
+
+  <!-- TESTIMONIAL -->
+  <div class="testimonial-section">
+    <blockquote class="testimonial-quote reveal">
+      "Working with Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S will fundamentally change how you think about design. We don't just make things beautiful — We make them matter."
+    </blockquote>
+    <div class="testimonial-author reveal delay-2">
+      <div class="author-name">Dibyajyoti Rabha</div>
+      <div class="author-role">Founder-CEO- Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">AA-B-I-XES</div>
-      <div class="footer-tagline">Beyond Definition. Beyond Time.</div>
-      <nav class="footer-nav">
-        <a href="#vision">Vision</a>
-        <a href="#identity">Identity</a>
-        <a href="#essence">Essence</a>
-        <a href="#manifesto">Manifesto</a>
-      </nav>
-      </a>
-         <a href="https://aab-i-xes.github.io/COREDib/" class="btn-primary">
-          <span class="btn-bg"></span>
-          <span class="btn-text">KNOW MORE</span>
-        </a>
-         <a href="https://www.instagram.com/dibo__jyoti__/" class="btn-ghost">
-          <span>🅾 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦</span>
-        </a>
-
-      <div class="footer-divider"></div>
-      <div class="footer-copy">© MMXXVI AA-B-I-XES · All Rights Reserved</div>
+  <footer>
+    <div class="footer-logo">Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</div>
+    <p class="footer-copy">© 2026 Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S corp. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/dibo__jyoti__/">INSTAGRAM</a>
+      <a href="https://aab-i-xes.github.io/COREDib/">PORTFOLIO</a>
+      <a href="#">LinkedIn</a>
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
