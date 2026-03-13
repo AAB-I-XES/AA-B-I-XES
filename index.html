@@ -1,216 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AABIXES-COREDib</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                        glassBorder: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lenis for Smooth Scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 </head>
-<body>
+<body class="bg-slate-900 text-white overflow-x-hidden antialiased">
+    
+    <!-- SVG Filter for Liquid Distortion Effect -->
+    <svg style="display:none;">
+        <defs>
+            <filter id="liquid-filter">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" result="displacement" />
+                <feBlend mode="normal" in="SourceGraphic" in2="displacement" />
+            </filter>
+        </defs>
+    </svg>
 
-  <!-- Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Canvas for Image Sequence Scroll Animation -->
+    <canvas id="hero-lightpass" class="fixed top-0 left-0 w-full h-screen object-cover -z-10 pointer-events-none opacity-60"></canvas>
 
-  <!-- Progress Bar -->
-  <div id="progress-bar"></div>
-
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</div>
-    <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#service">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero" style="max-width:100%; padding:0;">
-    <div class="hero-bg" class id="work"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Welcome to this Journey</p>
-      <h1 class="hero-title">We craft<br/><span>We create</span><br/>We Support</h1>
-      <p class="hero-sub">Bold oportunities for Bold people. <br> We build experiences that leave an impression.</p>
-      <a href="https://aab-i-xes.github.io/COREDib/" class="hero-cta">Explore Our Work</a>
-    </div>
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee-section">
-    <div class="marquee-track">
-      <div class="marquee-item">Branding<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Shopping<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Services<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Branding<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Interior design<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Architech<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Tutors<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Web Development<div class="marquee-dot"></div></div>
-      <div class="marquee-item">Art Exhibit<div class="marquee-dot"></div></div>
-      <div class="marquee-item">coming soon<div class="marquee-dot"></div></div>
-      <div class="marquee-item">coming soon<div class="marquee-dot"></div></div>
-      <div class="marquee-item">coming soon<div class="marquee-dot"></div></div>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <section>
-    <div class="about-grid" class id="about">
-      <div class="about-visual reveal-left">
-        <div class="about-card about-card-main">..</div>
-        <div class="about-card about-card-accent">
-          <div class="about-stat">
-            <div class="about-stat-num">..</div>
-            <div class="about-stat-label">Your trust <br> Our excelence</div>
-          </div>
+    <!-- Floating VisionOS Style Navbar -->
+    <nav id="navbar" class="fixed top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[90%] max-w-2xl origin-top">
+        <div class="vision-nav rounded-[2rem] px-8 py-4 flex justify-between items-center bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+            <a href="#home" class="text-xl font-bold tracking-widest text-white/90">AABIXES-COREDib</a>
+            <ul class="hidden md:flex gap-10 text-sm font-medium tracking-wide">
+                <li><a href="#home" class="text-white/70 hover:text-white transition-colors duration-300">Home</a></li>
+                <li><a href="#about" class="text-white/70 hover:text-white transition-colors duration-300">About</a></li>
+                <li><a href="#services" class="text-white/70 hover:text-white transition-colors duration-300">Services</a></li>
+                <li><a href="#portfolio" class="text-white/70 hover:text-white transition-colors duration-300">Work</a></li>
+                <li><a href="#contact" class="text-white/70 hover:text-white transition-colors duration-300">Contact</a></li>
+            </ul>
         </div>
-      </div>
-      <div>
-        <p class="about-label reveal delay-1">About us</p>
-        <h2 class="about-title reveal delay-2">Syncing Your - <br>Tech <br>Tasks and <br>Bringing it to Your Doorstep</h2>
-        <p class="about-text reveal delay-3">At AABIXES, we believe your time is too valuable to be spent on technical glitches or endless errands. We’ve built a unique service bridge that connects expert tech support with essential household help, from precision deliveries to personalized shopping</p>
-        <p class="about-text reveal delay-4">Whether you’re struggling with a stubborn Wi-Fi connection or need your weekly essentials delivered to your door, our mission is to handle the heavy lifting so you can focus on what truly matters.</p>
-      </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- STATS -->
-  <div class="stats-section">
-    <div class="stats-inner">
-      <div class="reveal delay-1">
-        <div class="stat-number" data-count="240">0</div>
-        <div class="stat-label">Projects Delivered</div>
-      </div>
-      <div class="reveal delay-2">
-        <div class="stat-number" data-count="98">0</div>
-        <div class="stat-label">Client Satisfaction %</div>
-      </div>
-      <div class="reveal delay-3">
-        <div class="stat-number" data-count="45">0</div>
-        <div class="stat-label">Awards Won</div>
-      </div>
-      <div class="reveal delay-4">
-        <div class="stat-number" data-count="12">0</div>
-        <div class="stat-label">Countries Served</div>
-      </div>
-    </div>
-  </div>
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
+            
+            <!-- SECTION 1: HOME -->
+            <section id="home" class="relative min-h-[120vh] flex items-center justify-center pt-20 px-4">
+                <div class="vision-card w-full max-w-4xl p-12 md:p-24 rounded-[3rem] text-center relative pointer-events-auto" data-hover-liquid>
+                    <!-- Refraction overlay -->
+                    <div class="absolute inset-0 rounded-[3rem] border-t border-l border-white/20 bg-gradient-to-br from-white/10 to-transparent pointer-events-none mix-blend-overlay"></div>
+                    
+                    <h2 class="hero-text text-white/60 font-medium tracking-[0.3em] mb-6 text-sm md:text-xs uppercase">CRAFTING THE EXTRAORDINARY</h2>
+                    <h1 class="hero-title text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter">
+                        Where Ideas<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-200" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1)">Come to Life</span>
+                    </h1>
+                    <p class="hero-text text-xl md:text-2xl text-white/50 mb-14 font-light max-w-2xl mx-auto">
+                       Turning ideas into powerful web experiences
+                    </p>
+                    
+                    <div class="hero-btns flex flex-col sm:flex-row gap-6 justify-center">
+                        <a href="#portfolio" class="px-10 py-5 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium transition-all duration-500 backdrop-blur-md border border-white/10 hover:border-white/30 transform hover:scale-105">
+                            Explore Work
+                        </a>
+                        <a href="#contact" class="px-10 py-5 rounded-full bg-transparent hover:bg-white/5 text-white/70 hover:text-white font-medium transition-all duration-300 transform hover:scale-105">
+                            Get in Touch
+                        </a>
+                    </div>
+                </div>
+            </section>
 
-  <!-- FEATURES -->
-  <section>
-    <div class="features-header" class id="service">
-      <p class="features-label reveal">What we do</p>
-      <h2 class="features-title reveal delay-2">Services built<br/>for impact</h2>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card reveal delay-1">
-        <div class="feature-num">01</div>
-        <div class="feature-icon">✦</div>
-        <h3 class="feature-title">Brand Identity</h3>
-        <p class="feature-text">Logo systems, typography, color palettes — we craft brand languages that speak before you say a word.</p>
-      </div>
-      <div class="feature-card reveal delay-2">
-        <div class="feature-num">02</div>
-        <div class="feature-icon">◈</div>
-        <h3 class="feature-title">Web development</h3>
-        <p class="feature-text">You provide ideas <br> We built it</p>
-      </div>
-      <div class="feature-card reveal delay-3">
-        <div class="feature-num">03</div>
-        <div class="feature-icon">⬡</div>
-        <h3 class="feature-title">Shopping</h3>
-        <p class="feature-text">Our shopping agents and bots help you find real and legitimate products</p>
-      </div>
-      <div class="feature-card reveal delay-2">
-        <div class="feature-num">04</div>
-        <div class="feature-icon">◎</div>
-        <h3 class="feature-title">Interior Design</h3>
-        <p class="feature-text">A chaoes free platform  where our agents help you design your Dream Home interior</p>
-      </div>
-      <div class="feature-card reveal delay-3">
-        <div class="feature-num">05</div>
-        <div class="feature-icon">❋</div>
-        <h3 class="feature-title">Art Exhibit</h3>
-        <p class="feature-text">Have lots of artwork you wanna show the World <br> Or wanna sell it <br> Come to us , We will provide you the best platform to sell or showcase your art,talent in our marketplace</p>
-      </div>
-      <div class="feature-card reveal delay-4">
-        <div class="feature-num">06</div>
-        <div class="feature-icon">⌘</div>
-        <h3 class="feature-title">Tutoring</h3>
-        <p class="feature-text">Cant find a proper tutor for you child.<br>
-        We can find you the best tutors at your area for you child.</p>
-      </div>
-    </div>
-  </section>
+            <!-- SECTION 2: ABOUT -->
+            <section id="about" class="relative min-h-screen flex items-center justify-center py-32 px-4 z-10">
+                <div class="max-w-6xl w-full grid md:grid-cols-2 gap-8 items-stretch">
+                    <div class="vision-card p-12 rounded-[2.5rem] flex flex-col justify-center" data-scroll-speed="1">
+                        <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-10">
+                            <span class="text-2xl">⚡</span>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Redefining Space <br><span class="text-white/40">in the Browser</span></h2>
+                        <p class="text-white/60 leading-relaxed max-w-md text-lg font-light">
+                            We specialize in creating modern, responsive, and high-performance websites that help businesses grow online. From clean UI/UX design to efficient backend development, we focus on building websites that are fast, secure, and user-friendly. Our goal is to turn ideas into powerful digital experiences that not only look great but also deliver real results for our clients.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-rows-2 gap-8">
+                        <div class="vision-card p-10 rounded-[2.5rem] relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <h3 class="text-2xl font-semibold mb-2">Animations</h3>
+                            <p class="text-white/50 text-sm">We use a variety of animations to make pages more engaging and interactive. These include smooth page transitions, scroll-based animations, hover effects, loading animations, and subtle micro-interactions. Elements can fade in, slide, scale, or reveal as users scroll, creating a dynamic flow through the content. These animations not only make the website visually appealing but also help guide the user’s attention and improve the overall browsing experience. ✨</p>
+                            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-500/30 blur-[50px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+                        </div>
+                        
+                        <div class="vision-card p-10 rounded-[2.5rem] relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                            <h3 class="text-2xl font-semibold mb-2">Spatial Rendering</h3>
+                            <p class="text-white/50 text-sm">Depth-aware layering, volumetric lighting, and parallax intersections.Spatial rendering in our animations focuses on creating a sense of depth and dimensional movement on the page. Elements are positioned and animated in a way that simulates space, layering, and perspective, making the interface feel more immersive rather than flat. Through subtle shifts in position, scale, and parallax effects, components interact within a visual space that guides the user’s eye and adds a richer, more dynamic experience to the page. ✨
+</p>
+                            <div class="absolute -right-10 -top-10 w-40 h-40 bg-cyan-500/30 blur-[50px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-  <!-- PARALLAX BANNER -->
-  <div class="parallax-banner">
-    <div class="parallax-banner-text" id="parallaxText">
-      Crafting the<br/>extraordinary
-    </div>
-  </div>
+            <!-- SECTION 3: SERVICES -->
+            <section id="services" class="relative min-h-screen py-32 px-4 flex flex-col justify-center z-10">
+                <div class="max-w-7xl w-full mx-auto">
+                    <div class="mb-20">
+                        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-6 relative inline-block">
+                            Capabilities
+                            <div class="absolute -bottom-4 left-0 w-24 h-1 bg-white/20 rounded-full"></div>
+                        </h2>
+                    </div>
 
-  <!-- WORK -->
-  <section>
-    <div class="work-header">
-      <h2 class="work-title reveal">Selected<br/>Work</h2>
-      <a href="#" class="work-link reveal delay-2">View All Projects →</a>
-    </div>
-    <div class="work-grid">
-      <div class="work-item reveal-left">
-        <div class="work-thumb work-thumb-1">..</div>
-        <div class="work-overlay">
-          <div class="work-overlay-title">..</div>
-          <div class="work-overlay-tag">Branding · 2026</div>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Service Card 1 -->
+                        <div class="vision-card p-10 rounded-[2rem] group cursor-pointer hover:border-white/30 transition-all duration-500">
+                            <div class="text-white/20 text-5xl font-black mb-8 group-hover:text-cyan-400 transition-colors duration-500">01</div>
+                            <h3 class="text-2xl font-bold mb-4">Spatial Design</h3>
+                            <p class="text-white/50 text-sm leading-relaxed mb-8">Designing UI for 3D contexts involving deep Z-index layering and responsive lighting.We combine smooth 2D animations with subtle 3D transformations, using layering, perspective, and motion to create depth and interactive visual experiences.”</p>
+                        </div>
+
+                        <!-- Service Card 2 -->
+                        <div class="vision-card p-10 rounded-[2rem] group cursor-pointer hover:border-white/30 transition-all duration-500 translate-y-0 md:translate-y-12">
+                            <div class="text-white/20 text-5xl font-black mb-8 group-hover:text-indigo-400 transition-colors duration-500">02</div>
+                            <h3 class="text-2xl font-bold mb-4">WebGL Scenery</h3>
+                            <p class="text-white/50 text-sm leading-relaxed mb-8">Implementing high-performance shaders, particle systems, and 3D object rendering via Three.js and raw WebGL.</p>
+                        </div>
+
+                        <!-- Service Card 3 -->
+                        <div class="vision-card p-10 rounded-[2rem] group cursor-pointer hover:border-white/30 transition-all duration-500 translate-y-0 md:translate-y-24">
+                            <div class="text-white/20 text-5xl font-black mb-8 group-hover:text-purple-400 transition-colors duration-500">03</div>
+                            <h3 class="text-2xl font-bold mb-4">Cinematic Motion</h3>
+                            <p class="text-white/50 text-sm leading-relaxed mb-8">Choreographing complex timeline animations triggered by scroll velocity using GSAP and Lenis.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: PORTFOLIO -->
+            <section id="portfolio" class="relative py-40 px-4 z-10">
+                <div class="max-w-[90rem] mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-20 text-center">Featured Work</h2>
+
+                    <div class="flex flex-col gap-32">
+                        <!-- Project 1 -->
+                        <div class="flex flex-col lg:flex-row items-center gap-16 group">
+                            <div class="w-full lg:w-3/5">
+                                <div class="vision-card aspect-video rounded-[2.5rem] overflow-hidden relative" data-hover-liquid>
+                                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-cyan-500/10 mix-blend-overlay z-10"></div>
+                                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-1000"></div>
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-2/5 px-4 lg:px-10">
+                                <span class="text-cyan-400 font-medium tracking-widest text-sm uppercase mb-4 block">Web Experience</span>
+                                <h3 class="text-4xl md:text-6xl font-bold mb-6">Luminiano</h3>
+                                <p class="text-white/60 text-lg mb-8 font-light">A browser-based virtual piano that allows users to play music in real time through an interactive and responsive interface.</p>
+                                <a href="https://aab-i-xes.github.io/LUMINIANO/" class="inline-flex items-center gap-4 text-white hover:text-cyan-300 transition-colors border-b border-white/20 hover:border-cyan-300 pb-2">
+                                    View Project <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="flex flex-col lg:flex-row-reverse items-center gap-16 group">
+                            <div class="w-full lg:w-3/5">
+                                <div class="vision-card aspect-video rounded-[2.5rem] overflow-hidden relative" data-hover-liquid>
+                                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-500/10 mix-blend-overlay z-10"></div>
+                                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-1000"></div>
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-2/5 px-4 lg:px-10 text-left lg:text-right">
+                                <span class="text-indigo-400 font-medium tracking-widest text-sm uppercase mb-4 block">Web game</span>
+                                <h3 class="text-4xl md:text-6xl font-bold mb-6">SKYSHHOT</h3>
+                                <p class="text-white/60 text-lg mb-8 font-light">An action-packed space fighter game where you control a starship, navigate through cosmic battles, and defeat waves of enemies.</p>
+                                <a href="#" class="inline-flex items-center gap-4 text-white hover:text-indigo-300 transition-colors border-b border-white/20 hover:border-indigo-300 pb-2">
+                                    coming soon <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: CONTACT -->
+            <section id="contact" class="relative min-h-[90vh] flex items-center justify-center py-20 px-4 z-10">
+                <div class="vision-card w-full max-w-5xl p-12 md:p-20 rounded-[3rem] relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                    
+                    <div class="grid md:grid-cols-2 gap-16 relative z-10">
+                        <div>
+                            <h2 class="text-5xl md:text-6xl font-black mb-8 tracking-tighter">Initiate <br>Sequence</h2>
+                            <p class="text-white/50 text-lg mb-10 font-light max-w-sm">Ready to build the next generation of web experiences? Let's talk.<br> Priotise contacting me on linkedin or instagram more. 
+                            </p>
+                            
+                            <a href="cdib394@gmail.com" class="text-2xl font-medium hover:text-cyan-400 transition-colors border-b border-white/20 pb-2 inline-block">
+                                cdib394@gmail.com
+                            </a>
+                            <div class="flex gap-4 pt-4">
+                                <!-- Social Icons -->
+                                <a href="#" class="w-12 h-12 rounded-full glass-btn-small flex items-center justify-center hover:text-sky-400 hover:bg-sky-500/20 transition-all hover:-translate-y-1">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                </a>
+                                <a href="https://www.linkedin.com/in/dibyajyoti-rabha-250671391" class="w-12 h-12 rounded-full glass-btn-small flex items-center justify-center hover:text-sky-400 hover:bg-sky-500/20 transition-all hover:-translate-y-1">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                </a>
+                                <a href="https://www.instagram.com/dibo__jyoti__/" class="w-12 h-12 rounded-full glass-btn-small flex items-center justify-center hover:text-sky-400 hover:bg-sky-500/20 transition-all hover:-translate-y-1">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <form class="space-y-6">
+                            <div class="relative group">
+                                <input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:bg-white/10 transition-all font-light placeholder-white/30 backdrop-blur-md" placeholder="Name">
+                            </div>
+                            <div class="relative group">
+                                <input type="email" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:bg-white/10 transition-all font-light placeholder-white/30 backdrop-blur-md" placeholder="Email">
+                            </div>
+                            <div class="relative group">
+                                <textarea rows="3" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:bg-white/10 transition-all font-light placeholder-white/30 backdrop-blur-md resize-none" placeholder="Message"></textarea>
+                            </div>
+                            <button type="button" class="w-full py-5 rounded-2xl bg-white text-black font-bold text-lg hover:bg-white/90 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
+                                Send info
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            
         </div>
-      </div>
-      <div class="work-item reveal delay-2">
-        <div class="work-thumb work-thumb-2">..</div>
-        <div class="work-overlay">
-          <div class="work-overlay-title">..</div>
-          <div class="work-overlay-tag">Identity · 2026</div>
-        </div>
-      </div>
-      <div class="work-item reveal delay-3">
-        <div class="work-thumb work-thumb-3">..</div>
-        <div class="work-overlay">
-          <div class="work-overlay-title">..</div>
-          <div class="work-overlay-tag">CREATIVITY · 2026</div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </main>
 
-  <!-- TESTIMONIAL -->
-  <div class="testimonial-section">
-    <blockquote class="testimonial-quote reveal">
-      "Working with Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S will fundamentally change how you think about design. We don't just make things beautiful — We make them matter."
-    </blockquote>
-    <div class="testimonial-author reveal delay-2">
-      <div class="author-name">Dibyajyoti Rabha</div>
-      <div class="author-role">Founder- Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</div>
+    <!-- Custom Liquid Cursor -->
+    <div id="liquid-cursor" class="fixed top-0 left-0 w-20 h-20 pointer-events-none z-[9999] opacity-0 transition-opacity duration-300">
+        <div class="cursor-blob w-full h-full rounded-full scale-[0.2] transition-transform duration-300" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px) brightness(1.2); -webkit-backdrop-filter: blur(8px) brightness(1.2); box-shadow: inset 0 0 15px rgba(255,255,255,0.4), inset 0 -4px 10px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.4);"></div>
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S</div>
-    <p class="footer-copy">© 2026 Ꜳ-🅱︎-Ⓘ-𝕏-Ɛ-S corp. All rights reserved.</p>
-    <div class="footer-links" class id="contact">
-      <a href="https://www.instagram.com/dibo__jyoti__/">INSTAGRAM</a>
-      <a href="https://aab-i-xes.github.io/COREDib/">PORTFOLIO</a>
-      <a href="https://www.linkedin.com/in/dibyajyoti-rabha-250671391">LinkedIn</a>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
