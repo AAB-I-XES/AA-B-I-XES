@@ -1,262 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AABIXES-COREDib</title>
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        glass: 'rgba(255, 255, 255, 0.05)',
-                        glassBorder: 'rgba(255, 255, 255, 0.1)',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Aabixes | Premium Web Development Services</title>
+    <meta name="description"
+        content="Aabixes — Crafting premium digital experiences with cutting-edge web development, immersive animations, and world-class UI/UX design.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Lenis for Smooth Scrolling -->
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
-<body class="bg-slate-900 text-white overflow-x-hidden antialiased">
-    
-    <!-- SVG Filter for Liquid Distortion Effect -->
-    <svg style="display:none;">
-        <defs>
-            <filter id="liquid-filter">
-                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" result="displacement" />
-                <feBlend mode="normal" in="SourceGraphic" in2="displacement" />
-            </filter>
-        </defs>
-    </svg>
 
-    <!-- Canvas for Image Sequence Scroll Animation -->
-    <canvas id="hero-lightpass" class="fixed top-0 left-0 w-full h-screen object-cover -z-10 pointer-events-none opacity-60"></canvas>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress">
+        <div id="scroll-progress-fill"></div>
+    </div>
 
-    <!-- Floating VisionOS Style Navbar -->
-    <nav id="navbar" class="fixed top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[90%] max-w-2xl origin-top">
-        <div class="vision-nav rounded-[2rem] px-8 py-4 flex justify-between items-center bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-            <a href="#home" class="text-xl font-bold tracking-widest text-white/90">AABIXES-COREDib</a>
-            <ul class="hidden md:flex gap-10 text-sm font-medium tracking-wide">
-                <li><a href="#home" class="text-white/70 hover:text-white transition-colors duration-300">Home</a></li>
-                <li><a href="#about" class="text-white/70 hover:text-white transition-colors duration-300">About</a></li>
-                <li><a href="#services" class="text-white/70 hover:text-white transition-colors duration-300">Services</a></li>
-                <li><a href="#portfolio" class="text-white/70 hover:text-white transition-colors duration-300">Work</a></li>
-                <li><a href="#contact" class="text-white/70 hover:text-white transition-colors duration-300">Contact</a></li>
+    <!-- Background Looping Video for Home -->
+    <video id="home-video" autoplay loop muted playsinline>
+        <source src="ASSETS/videos/backgroundvid/Simple_animationon_grass_and_trees_df58934600.mp4" type="video/mp4">
+    </video>
+
+    <!-- Background Frame Canvas -->
+    <canvas id="frame-canvas"></canvas>
+
+    <!-- Floating Navigation — Sticky Glass Bar -->
+    <div class="nav-container">
+        <nav class="floating-nav" id="main-nav">
+            <div class="nav-brand">
+                <img src="ASSETS/logo/logo.png" alt="Aabixes Logo" class="nav-logo">
+                Aabixes
+            </div>
+            <ul>
+                <li><a href="#home" class="nav-item active">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#features" class="nav-item">Features</a></li>
+                <li><a href="#services" class="nav-item">Services</a></li>
+                <li><a href="#showcase" class="nav-item">Showcase</a></li>
+                <li><a href="#process" class="nav-item">Process</a></li>
+                <li><a href="#stats" class="nav-item">Stats</a></li>
+                <li><a href="#demo" class="nav-item">Demo</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
             </ul>
-        </div>
-    </nav>
+        </nav>
+    </div>
 
+    <!-- Main Content Area -->
     <main id="smooth-wrapper">
         <div id="smooth-content">
-            
-            <!-- SECTION 1: HOME -->
-            <section id="home" class="relative min-h-[120vh] flex items-center justify-center pt-20 px-4">
-                <div class="vision-card w-full max-w-4xl p-12 md:p-24 rounded-[3rem] text-center relative pointer-events-auto" data-hover-liquid>
-                    <!-- Refraction overlay -->
-                    <div class="absolute inset-0 rounded-[3rem] border-t border-l border-white/20 bg-gradient-to-br from-white/10 to-transparent pointer-events-none mix-blend-overlay"></div>
-                    
-                    <h2 class="hero-text text-white/60 font-medium tracking-[0.3em] mb-6 text-sm md:text-xs uppercase">CRAFTING THE EXTRAORDINARY</h2>
-                    <h1 class="hero-title text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter">
-                        Where Ideas<br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-200" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1)">Come to Life</span>
-                    </h1>
-                    <p class="hero-text text-xl md:text-2xl text-white/50 mb-14 font-light max-w-2xl mx-auto">
-                       Turning ideas into powerful web experiences
-                    </p>
-                    
-                    <div class="hero-btns flex flex-col sm:flex-row gap-6 justify-center">
-                        <a href="#portfolio" class="px-10 py-5 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium transition-all duration-500 backdrop-blur-md border border-white/10 hover:border-white/30 transform hover:scale-105">
-                            Explore Work
-                        </a>
-                        <a href="#contact" class="px-10 py-5 rounded-full bg-transparent hover:bg-white/5 text-white/70 hover:text-white font-medium transition-all duration-300 transform hover:scale-105">
-                            Get in Touch
-                        </a>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 1. HERO SECTION — Kept Same Style           -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="home" class="page-section hero-section">
+                <!-- Mask Layer for Hover Reveal -->
+                <div class="hero-mask-layer">
+                    <div class="hero-mask-bg"></div>
+                </div>
+
+                <div class="hero-content cinematic-element">
+                    <h1 class="hero-title">Aabixes.</h1>
+                    <p class="subtitle">Crafting the Future of the Web</p>
+
+                    <button class="skeu-btn primary-btn hero-cta"
+                        onclick="document.querySelector('.nav-item[href=\'#contact\']').click()">
+                        <span class="btn-text">Hire Us</span>
+                        <span class="btn-shine"></span>
+                    </button>
+                </div>
+
+
+                <div class="scroll-indicator fade-text">
+                    <span>Discover Excellence</span>
+                    <div class="mouse">
+                        <div class="wheel"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 2: ABOUT -->
-            <section id="about" class="relative min-h-screen flex items-center justify-center py-32 px-4 z-10">
-                <div class="max-w-6xl w-full grid md:grid-cols-2 gap-8 items-stretch">
-                    <div class="vision-card p-12 rounded-[2.5rem] flex flex-col justify-center" data-scroll-speed="1">
-                        <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-10">
-                            <span class="text-2xl">⚡</span>
-                        </div>
-                        <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Redefining Space <br><span class="text-white/40">in the Browser</span></h2>
-                        <p class="text-white/60 leading-relaxed max-w-md text-lg font-light">
-                            We specialize in creating modern, responsive, and high-performance websites that help businesses grow online. From clean UI/UX design to efficient backend development, we focus on building websites that are fast, secure, and user-friendly. Our goal is to turn ideas into powerful digital experiences that not only look great but also deliver real results for our clients.
-                        </p>
-                    </div>
-                    
-                    <div class="grid grid-rows-2 gap-8">
-                        <div class="vision-card p-10 rounded-[2.5rem] relative overflow-hidden group">
-                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                            <h3 class="text-2xl font-semibold mb-2">Animations</h3>
-                            <p class="text-white/50 text-sm">We use a variety of animations to make pages more engaging and interactive. These include smooth page transitions, scroll-based animations, hover effects, loading animations, and subtle micro-interactions. Elements can fade in, slide, scale, or reveal as users scroll, creating a dynamic flow through the content. These animations not only make the website visually appealing but also help guide the user’s attention and improve the overall browsing experience. ✨</p>
-                            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-500/30 blur-[50px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
-                        </div>
-                        
-                        <div class="vision-card p-10 rounded-[2.5rem] relative overflow-hidden group">
-                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                            <h3 class="text-2xl font-semibold mb-2">Spatial Rendering</h3>
-                            <p class="text-white/50 text-sm">Depth-aware layering, volumetric lighting, and parallax intersections.Spatial rendering in our animations focuses on creating a sense of depth and dimensional movement on the page. Elements are positioned and animated in a way that simulates space, layering, and perspective, making the interface feel more immersive rather than flat. Through subtle shifts in position, scale, and parallax effects, components interact within a visual space that guides the user’s eye and adds a richer, more dynamic experience to the page. ✨
-</p>
-                            <div class="absolute -right-10 -top-10 w-40 h-40 bg-cyan-500/30 blur-[50px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
-                        </div>
-                    </div>
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 2. ABOUT SECTION — Brushed Metal Panel       -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="about" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Who We Are</span>
+                    <h2 class="section-title">Architects of<br>Digital Excellence</h2>
                 </div>
-            </section>
-
-            <!-- SECTION 3: SERVICES -->
-            <section id="services" class="relative min-h-screen py-32 px-4 flex flex-col justify-center z-10">
-                <div class="max-w-7xl w-full mx-auto">
-                    <div class="mb-20">
-                        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-6 relative inline-block">
-                            Capabilities
-                            <div class="absolute -bottom-4 left-0 w-24 h-1 bg-white/20 rounded-full"></div>
-                        </h2>
-                    </div>
-
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <!-- Service Card 1 -->
-                        <div class="vision-card p-10 rounded-[2rem] group cursor-pointer hover:border-white/30 transition-all duration-500">
-                            <div class="text-white/20 text-5xl font-black mb-8 group-hover:text-cyan-400 transition-colors duration-500">01</div>
-                            <h3 class="text-2xl font-bold mb-4">Spatial Design</h3>
-                            <p class="text-white/50 text-sm leading-relaxed mb-8">Designing UI for 3D contexts involving deep Z-index layering and responsive lighting.We combine smooth 2D animations with subtle 3D transformations, using layering, perspective, and motion to create depth and interactive visual experiences.”</p>
-                        </div>
-
-                        <!-- Service Card 2 -->
-                        <div class="vision-card p-10 rounded-[2rem] group cursor-pointer hover:border-white/30 transition-all duration-500 translate-y-0 md:translate-y-12">
-                            <div class="text-white/20 text-5xl font-black mb-8 group-hover:text-indigo-400 transition-colors duration-500">02</div>
-                            <h3 class="text-2xl font-bold mb-4">WebGL Scenery</h3>
-                            <p class="text-white/50 text-sm leading-relaxed mb-8">Implementing high-performance shaders, particle systems, and 3D object rendering via Three.js and raw WebGL.</p>
-                        </div>
-
-                        <!-- Service Card 3 -->
-                        <div class="vision-card p-10 rounded-[2rem] group cursor-pointer hover:border-white/30 transition-all duration-500 translate-y-0 md:translate-y-24">
-                            <div class="text-white/20 text-5xl font-black mb-8 group-hover:text-purple-400 transition-colors duration-500">03</div>
-                            <h3 class="text-2xl font-bold mb-4">Cinematic Motion</h3>
-                            <p class="text-white/50 text-sm leading-relaxed mb-8">Choreographing complex timeline animations triggered by scroll velocity using GSAP and Lenis.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 4: PORTFOLIO -->
-            <section id="portfolio" class="relative py-40 px-4 z-10">
-                <div class="max-w-[90rem] mx-auto">
-                    <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-20 text-center">Featured Work</h2>
-
-                    <div class="flex flex-col gap-32">
-                        <!-- Project 1 -->
-                        <div class="flex flex-col lg:flex-row items-center gap-16 group">
-                            <div class="w-full lg:w-3/5">
-                                <div class="vision-card aspect-video rounded-[2.5rem] overflow-hidden relative" data-hover-liquid>
-                                    <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-cyan-500/10 mix-blend-overlay z-10"></div>
-                                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-1000"></div>
+                <div class="about-deck-container">
+                    <div class="about-card card-1" data-tilt>
+                        <div class="about-card-inner">
+                            <div class="about-card-front skeu-panel metal-panel">
+                                <div class="panel-icon-wrap">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                        <path d="M2 17l10 5 10-5" />
+                                        <path d="M2 12l10 5 10-5" />
+                                    </svg>
+                                </div>
+                                <h3>Our Mission</h3>
+                            </div>
+                            <div class="about-card-back skeu-panel metal-panel">
+                                <div class="back-content">
+                                    <h3>Our Mission</h3>
+                                    <p>At Aabixes, we don't just write code — we architect digital experiences that push
+                                        boundaries.
+                                        Every pixel is placed with purpose, every animation tells a story.</p>
                                 </div>
                             </div>
-                            <div class="w-full lg:w-2/5 px-4 lg:px-10">
-                                <span class="text-cyan-400 font-medium tracking-widest text-sm uppercase mb-4 block">Web Experience</span>
-                                <h3 class="text-4xl md:text-6xl font-bold mb-6">Luminiano</h3>
-                                <p class="text-white/60 text-lg mb-8 font-light">A browser-based virtual piano that allows users to play music in real time through an interactive and responsive interface.</p>
-                                <a href="https://aab-i-xes.github.io/LUMINIANO/" class="inline-flex items-center gap-4 text-white hover:text-cyan-300 transition-colors border-b border-white/20 hover:border-cyan-300 pb-2">
-                                    View Project <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                </a>
-                            </div>
                         </div>
+                    </div>
 
-                        <!-- Project 2 -->
-                        <div class="flex flex-col lg:flex-row-reverse items-center gap-16 group">
-                            <div class="w-full lg:w-3/5">
-                                <div class="vision-card aspect-video rounded-[2.5rem] overflow-hidden relative" data-hover-liquid>
-                                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-500/10 mix-blend-overlay z-10"></div>
-                                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-1000"></div>
+                    <div class="about-card card-2" data-tilt>
+                        <div class="about-card-inner">
+                            <div class="about-card-front skeu-panel metal-panel">
+                                <div class="panel-icon-wrap">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path
+                                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                                    </svg>
+                                </div>
+                                <h3>Our Craft</h3>
+                            </div>
+                            <div class="about-card-back skeu-panel metal-panel">
+                                <div class="back-content">
+                                    <h3>Our Craft</h3>
+                                    <p>Blending cutting-edge technology with premium aesthetics — Glassmorphism,
+                                        Neumorphism, and
+                                        Skeuomorphism — to deliver web solutions that feel alive.</p>
                                 </div>
                             </div>
-                            <div class="w-full lg:w-2/5 px-4 lg:px-10 text-left lg:text-right">
-                                <span class="text-indigo-400 font-medium tracking-widest text-sm uppercase mb-4 block">Web game</span>
-                                <h3 class="text-4xl md:text-6xl font-bold mb-6">SKYSHHOT</h3>
-                                <p class="text-white/60 text-lg mb-8 font-light">An action-packed space fighter game where you control a starship, navigate through cosmic battles, and defeat waves of enemies.</p>
-                                <a href="#" class="inline-flex items-center gap-4 text-white hover:text-indigo-300 transition-colors border-b border-white/20 hover:border-indigo-300 pb-2">
-                                    coming soon <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                </a>
+                        </div>
+                    </div>
+
+                    <div class="about-card card-3" data-tilt>
+                        <div class="about-card-inner">
+                            <div class="about-card-front skeu-panel metal-panel">
+                                <div class="panel-icon-wrap">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                        <polyline points="22 4 12 14.01 9 11.01" />
+                                    </svg>
+                                </div>
+                                <h3>Our Promise</h3>
+                            </div>
+                            <div class="about-card-back skeu-panel metal-panel">
+                                <div class="back-content">
+                                    <h3>Our Promise</h3>
+                                    <p>We deliver pixel-perfect, performance-optimized, and jaw-droppingly beautiful web
+                                        experiences. Every single time. No exceptions.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 5: CONTACT -->
-            <section id="contact" class="relative min-h-[90vh] flex items-center justify-center py-20 px-4 z-10">
-                <div class="vision-card w-full max-w-5xl p-12 md:p-20 rounded-[3rem] relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-                    <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-                    
-                    <div class="grid md:grid-cols-2 gap-16 relative z-10">
-                        <div>
-                            <h2 class="text-5xl md:text-6xl font-black mb-8 tracking-tighter">Initiate <br>Sequence</h2>
-                            <p class="text-white/50 text-lg mb-10 font-light max-w-sm">Ready to build the next generation of web experiences? Let's talk.<br> Priotise contacting me on linkedin or instagram more. 
-                            </p>
-                            
-                            <a href="cdib394@gmail.com" class="text-2xl font-medium hover:text-cyan-400 transition-colors border-b border-white/20 pb-2 inline-block">
-                                cdib394@gmail.com
-                            </a>
-                            <div class="flex gap-4 pt-4">
-                                <!-- Social Icons -->
-                                <a href="#" class="w-12 h-12 rounded-full glass-btn-small flex items-center justify-center hover:text-sky-400 hover:bg-sky-500/20 transition-all hover:-translate-y-1">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-                                </a>
-                                <a href="https://www.linkedin.com/in/dibyajyoti-rabha-250671391" class="w-12 h-12 rounded-full glass-btn-small flex items-center justify-center hover:text-sky-400 hover:bg-sky-500/20 transition-all hover:-translate-y-1">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                </a>
-                                <a href="https://www.instagram.com/dibo__jyoti__/" class="w-12 h-12 rounded-full glass-btn-small flex items-center justify-center hover:text-sky-400 hover:bg-sky-500/20 transition-all hover:-translate-y-1">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                                </a>
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 3. FEATURES SECTION — Skeuomorphic Cards     -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="features" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">What We Offer</span>
+                    <h2 class="section-title">Premium Features</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="skeu-feature-card cinematic-element" data-tilt>
+                        <div class="feature-icon-container">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                            </svg>
+                        </div>
+                        <h3>Clean Code</h3>
+                        <p>Production-ready, modular code architecture that scales with your business.</p>
+                    </div>
+                    <div class="skeu-feature-card cinematic-element" data-tilt>
+                        <div class="feature-icon-container">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                <line x1="8" y1="21" x2="16" y2="21" />
+                                <line x1="12" y1="17" x2="12" y2="21" />
+                            </svg>
+                        </div>
+                        <h3>Responsive Design</h3>
+                        <p>Pixel-perfect layouts that look stunning on every device, from mobile to 4K.</p>
+                    </div>
+                    <div class="skeu-feature-card cinematic-element" data-tilt>
+                        <div class="feature-icon-container">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                            </svg>
+                        </div>
+                        <h3>Blazing Fast</h3>
+                        <p>Optimized for speed with sub-second load times and buttery-smooth animations.</p>
+                    </div>
+                    <div class="skeu-feature-card cinematic-element" data-tilt>
+                        <div class="feature-icon-container">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                        </div>
+                        <h3>Help & Support</h3>
+                        <p>We provide 24/7 support to our clients.Even after delivery of products</p>
+                    </div>
+                    <div class="skeu-feature-card cinematic-element" data-tilt>
+                        <div class="feature-icon-container">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="2" y1="12" x2="22" y2="12" />
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            </svg>
+                        </div>
+                        <h3>SEO Optimized</h3>
+                        <p>Built-in SEO best practices to ensure your website ranks and gets discovered.</p>
+                    </div>
+                    <div class="skeu-feature-card cinematic-element" data-tilt>
+                        <div class="feature-icon-container">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                            </svg>
+                        </div>
+                        <h3>3D & Motion</h3>
+                        <p>Immersive 3D experiences and cinematic motion design that captivate visitors.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 4. SERVICES SECTION — Tactile Service Cards  -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="services" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Our Toolkit</span>
+                    <h2 class="section-title">Comprehensive Services</h2>
+                </div>
+                <div class="services-grid">
+                    <div class="skeu-service-card cinematic-element">
+                        <div class="service-badge">01</div>
+                        <h3>Architecture</h3>
+                        <p>Interactive, responsive layouts built with React, Next.js, and modern CSS frameworks. Every
+                            interface is crafted for delight.</p>
+                        <div class="service-tech-pills">
+                            <span class="tech-pill">React</span>
+                            <span class="tech-pill">Next.js</span>
+                            <span class="tech-pill">CSS3</span>
+                            <span class="tech-pill">HTML:5</span>
+
+                        </div>
+                    </div>
+
+                    <div class="skeu-service-card cinematic-element">
+                        <div class="service-badge">03</div>
+                        <h3>UI/UX Design</h3>
+                        <p>Immersive animations, micro-interactions, and aesthetics that make your brand unforgettable.
+                            Design that speaks.</p>
+                        <div class="service-tech-pills">
+                            <span class="tech-pill">GSAP</span>
+                            <span class="tech-pill">Three.js</span>
+                            <span class="tech-pill">CSS3</span>
+                            <span class="tech-pill">Tailwind CSS</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 5. PRODUCT SHOWCASE — Interactive Mockups     -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="showcase" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Our Work</span>
+                    <h2 class="section-title">Product Showcase</h2>
+                </div>
+                <div class="macbook-showcase-container">
+                    <div class="macbook-slide mac-3">
+                        <div class="macbook-frame">
+                            <img src="ASSETS/images/sections/showcase.png" alt="MacBook Display" class="macbook-img">
+                            <div class="macbook-screen">
+                                <video src="assets/videos/showcasevid/cardiis.mp4" muted autoplay loop playsinline
+                                    class="showcase-vid"></video>
                             </div>
                         </div>
-                        
-                        <form class="space-y-6">
-                            <div class="relative group">
-                                <input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:bg-white/10 transition-all font-light placeholder-white/30 backdrop-blur-md" placeholder="Name">
+                        <h3 class="mac-title">Cardiiis</h3>
+                    </div>
+
+                    <div class="macbook-slide mac-2">
+                        <div class="macbook-frame">
+                            <img src="ASSETS/images/sections/showcase.png" alt="MacBook Display" class="macbook-img">
+                            <div class="macbook-screen">
+                                <video src="assets/videos/showcasevid/cofeul.mp4" muted autoplay loop playsinline
+                                    class="showcase-vid"></video>
                             </div>
-                            <div class="relative group">
-                                <input type="email" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:bg-white/10 transition-all font-light placeholder-white/30 backdrop-blur-md" placeholder="Email">
+                        </div>
+                        <h3 class="mac-title">JuicyMusy</h3>
+                    </div>
+
+                    <div class="macbook-slide mac-1">
+                        <div class="macbook-frame">
+                            <img src="ASSETS/images/sections/showcase.png" alt="MacBook Display" class="macbook-img">
+                            <div class="macbook-screen">
+                                <video src="assets/videos/showcasevid/hungry.mp4" muted autoplay loop playsinline
+                                    class="showcase-vid"></video>
                             </div>
-                            <div class="relative group">
-                                <textarea rows="3" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:bg-white/10 transition-all font-light placeholder-white/30 backdrop-blur-md resize-none" placeholder="Message"></textarea>
+                        </div>
+                        <h3 class="mac-title">Hungry Pallete</h3>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 6. TECH STACK — Realistic Pill Badges         -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="stack" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Technology</span>
+                    <h2 class="section-title">Our Tech Stack</h2>
+                </div>
+                <div class="stack-tray skeu-panel cinematic-element">
+                    <div class="stack-row">
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>React</div>
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>Next.js</div>
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>TypeScript</div>
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>Node.js</div>
+                    </div>
+                    <div class="stack-row">
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>Python</div>
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>GSAP</div>
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>Three.js</div>
+                        <div class="stack-pill cinematic-element"><span class="pill-dot"></span>Tailwind</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 7. PROCESS — Skeuomorphic Progress Steps     -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="process" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">How We Work</span>
+                    <h2 class="section-title">Our Process</h2>
+                </div>
+                <div class="process-container cinematic-element">
+                    <div class="process-bar" id="process-bar">
+                        <div class="process-track">
+                            <div class="process-fill" id="process-fill"></div>
+                        </div>
+                        <div class="process-step active" data-step="1">
+                            <div class="step-node">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
                             </div>
-                            <button type="button" class="w-full py-5 rounded-2xl bg-white text-black font-bold text-lg hover:bg-white/90 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
-                                Send info
+                            <span class="step-label">Discovery</span>
+                            <span class="step-desc">Understanding your vision & goals</span>
+                        </div>
+                        <div class="process-step" data-step="2">
+                            <div class="step-node">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                                    <path d="M2 2l7.586 7.586" />
+                                    <circle cx="11" cy="11" r="2" />
+                                </svg>
+                            </div>
+                            <span class="step-label">Design</span>
+                            <span class="step-desc">Crafting the perfect interface</span>
+                        </div>
+                        <div class="process-step" data-step="3">
+                            <div class="step-node">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="16 18 22 12 16 6" />
+                                    <polyline points="8 6 2 12 8 18" />
+                                </svg>
+                            </div>
+                            <span class="step-label">Develop</span>
+                            <span class="step-desc">Building with clean, scalable code</span>
+                        </div>
+                        <div class="process-step" data-step="4">
+                            <div class="step-node">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                            </div>
+                            <span class="step-label">Deploy</span>
+                            <span class="step-desc">Launch & ongoing maintenance</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 8. STATS SECTION — Animated Counters          -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="stats" class="page-section skeu-section">
+                <div class="stats-grid">
+                    <div class="skeu-stat-panel cinematic-element">
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-label">Projects Delivered +</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" data-width="100%"></div>
+                        </div>
+                    </div>
+                    <div class="skeu-stat-panel cinematic-element">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">Client Satisfaction %</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" data-width="98%"></div>
+                        </div>
+                    </div>
+                    <div class="skeu-stat-panel cinematic-element">
+                        <div class="stat-number" data-target="3">0</div>
+                        <div class="stat-label">Years of Excellence</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" data-width="45%"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 10. DEMO PROJECTS — Physical Photo Frames     -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="demo" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Portfolio</span>
+                    <h2 class="section-title">Demo Projects</h2>
+                </div>
+                <div class="demo-cards">
+                    <a href="#" target="_blank" class="skeu-demo-card cinematic-element" data-tilt>
+                        <div class="demo-card-img">
+                            <img src="assets/images/demo sites/hungry.jpeg" alt="Hungry Pallete preview">
+                            <div class="demo-card-overlay"></div>
+                        </div>
+                        <div class="demo-card-body">
+                            <h3>Hungry Pallete</h3>
+                            <span class="demo-card-tag">Restaurant & Food</span>
+                            <span class="demo-card-arrow">→</span>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="skeu-demo-card cinematic-element" data-tilt>
+                        <div class="demo-card-img">
+                            <img src="assets/images/demo sites/juicy.jpeg" alt="JuicyMusy preview">
+                            <div class="demo-placeholder gradient-2"></div>
+                            <div class="demo-card-overlay"></div>
+                        </div>
+                        <div class="demo-card-body">
+                            <h3>JuicyMusy</h3>
+                            <span class="demo-card-tag">Beverage & Lifestyle</span>
+                            <span class="demo-card-arrow">→</span>
+                        </div>
+                    </a>
+                    <a href="#" target="_blank" class="skeu-demo-card cinematic-element" data-tilt>
+                        <div class="demo-card-img">
+                            <img src="assets/images/demo sites/cardiis.jpg" alt="Luminiano preview">
+                            <div class="demo-placeholder gradient-3"></div>
+                            <div class="demo-card-overlay"></div>
+                        </div>
+                        <div class="demo-card-body">
+                            <h3>Luminiano</h3>
+                            <span class="demo-card-tag">Premium playing cards</span>
+                            <span class="demo-card-arrow">→</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 11. CTA / PRICING SECTION                     -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="cta" class="page-section skeu-section cta-section">
+                <div class="cta-content cinematic-element">
+                    <h2 class="cta-headline">Ready to Build<br>Something Amazing?</h2>
+                    <p class="cta-sub">Let's turn your vision into a stunning digital reality. Premium quality,
+                        delivered on time.</p>
+                    <div class="cta-buttons">
+                        <button class="skeu-btn primary-btn cta-big-btn"
+                            onclick="document.querySelector('.nav-item[href=\'#contact\']').click()">
+                            <span class="btn-text">Start Your Project</span>
+                            <span class="btn-shine"></span>
+                        </button>
+                        <button class="skeu-btn secondary-btn"
+                            onclick="document.querySelector('.nav-item[href=\'#demo\']').click()">
+                            <span class="btn-text">View Our Work</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Decorative floating elements -->
+                <div class="cta-deco cta-deco-1 floating-el" data-speed="0.06"></div>
+                <div class="cta-deco cta-deco-2 floating-el" data-speed="0.04"></div>
+                <div class="cta-deco cta-deco-3 floating-el" data-speed="0.08"></div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 12. FAQ SECTION — Accordion with Toggles      -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="faq" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Questions</span>
+                    <h2 class="section-title">FAQ</h2>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item cinematic-element">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What technologies do you specialize in?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We specialize in modern web technologies including HTML, CSS, JavaScript, React, Next.js,
+                                Node.js, Python,
+                                Three.js, GSAP, and various cloud platforms. Our team stays at the forefront of web
+                                development trends.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item cinematic-element">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>How long does a typical project take?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Project timelines vary based on complexity. A standard website takes 1-2 weeks, while
+                                complex web applications can take 3-4 weeks. We provide detailed timelines during our
+                                discovery phase.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item cinematic-element">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Do you offer ongoing maintenance?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! We offer comprehensive maintenance packages that include security updates,
+                                performance monitoring, content updates, and priority support to keep your website
+                                running at peak performance.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item cinematic-element">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What makes Aabixes different?</span>
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Our obsession with design excellence, cinematic animations, and premium aesthetics sets
+                                us apart. We don't build websites — we craft digital experiences that leave lasting
+                                impressions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 13. NEWSLETTER SECTION                        -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="newsletter" class="page-section skeu-section newsletter-section">
+                <div class="newsletter-panel cinematic-element">
+                    <div class="newsletter-content">
+                        <h3>Stay in the Loop</h3>
+                        <p>Get the latest updates on web trends, design inspiration, and exclusive offers.</p>
+                    </div>
+                    <form class="newsletter-form" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Your email address" class="skeu-input newsletter-input">
+                        <button type="submit" class="skeu-btn primary-btn newsletter-btn">
+                            <span class="btn-text">Subscribe</span>
+                            <span class="btn-shine"></span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 14. CONTACT SECTION                           -->
+            <!-- ════════════════════════════════════════════ -->
+            <section id="contact" class="page-section skeu-section">
+                <div class="section-header cinematic-element">
+                    <span class="section-tag">Get In Touch</span>
+                    <h2 class="section-title">Start a Project</h2>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-form-panel cinematic-element">
+                        <form class="contact-form" onsubmit="event.preventDefault();">
+                            <div class="form-group">
+                                <label class="skeu-label">Your Name</label>
+                                <input type="text" placeholder="John Doe" class="skeu-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="skeu-label">Your Email</label>
+                                <input type="email" placeholder="john@example.com" class="skeu-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="skeu-label">Your Vision</label>
+                                <textarea placeholder="Tell us about your dream project..."
+                                    class="skeu-input skeu-textarea" rows="5"></textarea>
+                            </div>
+                            <button type="submit" class="skeu-btn primary-btn submit-btn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-shine"></span>
                             </button>
                         </form>
                     </div>
+                    <div class="contact-info-panel cinematic-element">
+                        <div class="contact-info-card">
+                            <div class="info-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                            </div>
+                            <span>cdib394@gmail.com</span>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/dibo__jyoti__/" target="_blank"
+                                class="social-btn skeu-btn" aria-label="Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                                </svg>
+                                <span>Instagram</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/dibyajyoti-rabha-250671391" target="_blank"
+                                class="social-btn skeu-btn" aria-label="LinkedIn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                    <rect x="2" y="9" width="4" height="12" />
+                                    <circle cx="4" cy="4" r="2" />
+                                </svg>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="mailto:cdib394@gmail.com" class="social-btn skeu-btn" aria-label="Email">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                                <span>Email Us</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </section>
-            
+
+            <!-- ════════════════════════════════════════════ -->
+            <!-- 15. FOOTER — Premium Minimal                  -->
+            <!-- ════════════════════════════════════════════ -->
+            <footer id="footer" class="site-footer">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <span class="footer-logo">Aabixes</span>
+                        <p class="footer-tagline">Crafting the Extraordinary</p>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#home">Home</a>
+                        <a href="#about">About</a>
+                        <a href="#features">Features</a>
+                        <a href="#services">Services</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="footer-divider"></div>
+                    <p class="footer-copy">&copy; 2026 Aabixes. All rights reserved.
+            </footer>
+
         </div>
     </main>
 
-    <!-- Custom Liquid Cursor -->
-    <div id="liquid-cursor" class="fixed top-0 left-0 w-20 h-20 pointer-events-none z-[9999] opacity-0 transition-opacity duration-300">
-        <div class="cursor-blob w-full h-full rounded-full scale-[0.2] transition-transform duration-300" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px) brightness(1.2); -webkit-backdrop-filter: blur(8px) brightness(1.2); box-shadow: inset 0 0 15px rgba(255,255,255,0.4), inset 0 -4px 10px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.4);"></div>
-    </div>
+    <!-- Atmospheric Overlays -->
+    <div id="fog-overlay"></div>
+    <div id="bloom-overlay"></div>
+    <div id="particle-container"></div>
 
-    <script src="main.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
