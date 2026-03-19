@@ -19,6 +19,33 @@
     <script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+const supabaseClient = supabase.createClient(
+  "YOUR_PROJECT_URL",
+  "YOUR_ANON_KEY"
+);
+
+async function sendMessage(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const message = document.getElementById("message").value;
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .insert([{ name, email, message }]);
+
+  if (error) {
+    alert("❌ Failed to send message");
+    console.log(error);
+  } else {
+    alert("✅ Message sent successfully!");
+  }
+}
+</script>
 </head>
 
 <body>
@@ -607,25 +634,24 @@
                 </div>
                 <div class="contact-grid">
                     <div class="contact-form-panel cinematic-element">
-                        <form class="contact-form" onsubmit="event.preventDefault();">
-                            <div class="form-group">
-                                <label class="skeu-label">Your Name</label>
-                                <input type="text" placeholder="John Doe" class="skeu-input">
-                            </div>
-                            <div class="form-group">
-                                <label class="skeu-label">Your Email</label>
-                                <input type="email" placeholder="john@example.com" class="skeu-input">
-                            </div>
-                            <div class="form-group">
-                                <label class="skeu-label">Your Vision</label>
-                                <textarea placeholder="Tell us about your dream project..."
-                                    class="skeu-input skeu-textarea" rows="5"></textarea>
-                            </div>
-                            <button type="submit" class="skeu-btn primary-btn submit-btn">
-                                <span class="btn-text">Send Message</span>
-                                <span class="btn-shine"></span>
-                            </button>
-                        </form>
+                       <form class="contact-form" onsubmit="sendMessage(event)">
+    <div class="form-group">
+        <label class="skeu-label">Your Name</label>
+        <input id="name" type="text" placeholder="John Doe" class="skeu-input" required>
+    </div>
+    <div class="form-group">
+        <label class="skeu-label">Your Email</label>
+        <input id="email" type="email" placeholder="john@example.com" class="skeu-input" required>
+    </div>
+    <div class="form-group">
+        <label class="skeu-label">Your Vision</label>
+        <textarea id="message" placeholder="Tell us about your dream project..."
+            class="skeu-input skeu-textarea" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="skeu-btn primary-btn submit-btn">
+        <span class="btn-text">Send Message</span>
+    </button>
+</form>
                     </div>
                     <div class="contact-info-panel cinematic-element">
                         <div class="contact-info-card">
